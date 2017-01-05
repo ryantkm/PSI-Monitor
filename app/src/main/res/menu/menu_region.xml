@@ -1,0 +1,47 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.eventdee.psimonitor.activity.RegionsActivity">
+
+    <item
+        android:id="@+id/action_pollutant"
+        android:orderInCategory="100"
+        android:title="PSI"
+        app:showAsAction="always">
+
+        <menu>
+            <group
+                android:id="@+id/menu_pollutant"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/psi"
+                    android:checked="true"
+                    android:title="@string/psi" />
+
+                <item
+                    android:id="@+id/so2"
+                    android:title="@string/SO2" />
+
+                <item
+                    android:id="@+id/pm10"
+                    android:title="@string/PM10" />
+
+                <item
+                    android:id="@+id/no2"
+                    android:title="@string/NO2" />
+
+                <item
+                    android:id="@+id/o3"
+                    android:title="@string/O3" />
+
+                <item
+                    android:id="@+id/co"
+                    android:title="@string/CO" />
+
+                <item
+                    android:id="@+id/pm25"
+                    android:title="@string/PM25" />
+            </group>
+        </menu>
+    </item>
+</menu>

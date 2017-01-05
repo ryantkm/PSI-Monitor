@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <integer name="grid_number_cols">3</integer>
+    <dimen name="region_cardview_height">160dp</dimen>
+</resources>
