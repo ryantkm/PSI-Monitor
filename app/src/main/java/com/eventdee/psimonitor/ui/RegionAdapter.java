@@ -1,5 +1,6 @@
 package com.eventdee.psimonitor.ui;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.eventdee.psimonitor.R;
 import com.eventdee.psimonitor.pojo.RegionMetadatum;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -32,10 +34,12 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.RegionView
 
     ArrayList<RegionMetadatum> regions;
     String pollutantLabel;
+    Context context;
 
-    public RegionAdapter(ArrayList<RegionMetadatum> regions, String pollutantLabel){
+    public RegionAdapter(ArrayList<RegionMetadatum> regions, String pollutantLabel, Context context) {
         this.regions = regions;
         this.pollutantLabel = pollutantLabel;
+        this.context = context;
     }
 
     @Override
@@ -48,7 +52,8 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.RegionView
     @Override
     public void onBindViewHolder(RegionViewHolder regionViewHolder, int i) {
         regionViewHolder.regionName.setText(regions.get(i).getName());
-        regionViewHolder.regionImage.setImageResource(regions.get(i).getImageLocation());
+//        regionViewHolder.regionImage.setImageResource(regions.get(i).getImageLocation());
+        Picasso.with(context).load(regions.get(i).getImageLocation()).into(regionViewHolder.regionImage);
         regionViewHolder.regionPSI.setText(String.valueOf(regions.get(i).getPollutantValue()));
         regionViewHolder.pollutantLabel.setText(pollutantLabel);
     }

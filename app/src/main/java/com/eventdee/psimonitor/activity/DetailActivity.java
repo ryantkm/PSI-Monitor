@@ -23,6 +23,9 @@ import com.eventdee.psimonitor.pojo.Item;
 import com.eventdee.psimonitor.pojo.Pollutant;
 import com.eventdee.psimonitor.ui.ReadingAdapter;
 import com.eventdee.psimonitor.ui.RecyclerItemClickListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,6 +56,7 @@ public class DetailActivity extends AppCompatActivity {
     private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private String locationName;
     private String dateStr;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,10 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -301,7 +309,9 @@ public class DetailActivity extends AppCompatActivity {
         TextView psiTV = (TextView) findViewById(R.id.detailPSI);
         TextView statusTV = (TextView) findViewById(R.id.status);
 
-        locationIV.setImageResource(image);
+        Picasso.with(this).load(image).into(locationIV);
+
+//        locationIV.setImageResource(image);
         psiTV.setText(String.valueOf(currentPSI));
 
         // set the color of PSI background depending on PSI reading

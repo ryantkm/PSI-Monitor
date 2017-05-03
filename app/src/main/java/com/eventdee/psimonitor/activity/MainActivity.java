@@ -27,6 +27,9 @@ import com.eventdee.psimonitor.pojo.AirQuality;
 import com.eventdee.psimonitor.pojo.Item;
 import com.eventdee.psimonitor.pojo.RegionMetadatum;
 import com.eventdee.psimonitor.ui.OnSwipeTouchListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private String regionDate;
     private ArrayList<Item> PSIArray = new ArrayList<Item>();
     private ArrayList<RegionMetadatum> RegionArray = new ArrayList<RegionMetadatum>();
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
         ivMainBackground = (ImageView) findViewById(R.id.mainBackground);
         rightArrow = (ImageView) findViewById(R.id.rightarrow);
         leftArrow = (ImageView) findViewById(R.id.leftarrow);
+        ivMainBackground = (ImageView) findViewById(R.id.mainBackground);
+
+        Picasso.with(this).load(R.drawable.sgskyline).into(ivMainBackground);
 
         rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,8 +170,9 @@ public class MainActivity extends AppCompatActivity {
 
                     PSIArray = (ArrayList<Item>) response.body().getItems();
                     RegionArray = (ArrayList<RegionMetadatum>) response.body().getRegionMetadata();
-                    Collections.swap(RegionArray, 1, 4);
-                    Collections.swap(RegionArray, 3, 4);
+                    Collections.swap(RegionArray, 0, 5);
+                    Collections.swap(RegionArray, 2, 3);
+                    Collections.swap(RegionArray, 4, 5);
                     currentPSI = PSIArray.get(PSIArray.size() - 1).getReadings().getPsiTwentyFourHourly().getNational();
                     dateString = PSIArray.get(PSIArray.size() - 1).getTimestamp();
 
@@ -186,6 +198,9 @@ public class MainActivity extends AppCompatActivity {
             });
         } else {
             Toast.makeText(this, "Network is not available", Toast.LENGTH_LONG).show();
+            if (tvCurrentPsi.getText() == null || tvCurrentPsi.getText() == "") {
+                tvCurrentPsi.setText("???");
+            }
         }
 
     }

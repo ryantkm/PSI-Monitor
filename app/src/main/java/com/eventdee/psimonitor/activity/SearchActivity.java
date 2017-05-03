@@ -28,7 +28,10 @@ import com.eventdee.psimonitor.network.ApiInterface;
 import com.eventdee.psimonitor.pojo.AirQuality;
 import com.eventdee.psimonitor.pojo.Item;
 import com.eventdee.psimonitor.pojo.RegionMetadatum;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -45,18 +48,24 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private Button btnSubmit;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private String dateString;
-    private ArrayList<Item> PSIArray = new ArrayList<Item>();
+    private ArrayList<Item> PSIArray = new ArrayList<>();
     ArrayList<RegionMetadatum> RegionArray = new ArrayList<RegionMetadatum>();
-    private final Calendar c = Calendar.getInstance();
+    private Calendar c = Calendar.getInstance();
+    private SimpleDateFormat queryFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static int position;
     private int timePosition;
     private static int imageLocation;
     private int timeSelectedInt = 2400;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         datePicker = (Button) findViewById(R.id.datePicker);
         timePicker = (Button) findViewById(R.id.timePicker);
@@ -220,7 +229,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         if (v == btnSubmit) {
 
             if (dateString == null || dateString.isEmpty()) {
-                dateString = mYear + "-" + (mMonth + 1) + "-" + mDay;
+                dateString = queryFormat.format(c.getTime());
             }
 
             if (regionPicker.getText() == null || regionPicker.getText() == "") {
@@ -299,8 +308,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
                     PSIArray = (ArrayList<Item>) response.body().getItems();
                     RegionArray = (ArrayList<RegionMetadatum>) response.body().getRegionMetadata();
-                    Collections.swap(RegionArray, 1, 4);
-                    Collections.swap(RegionArray, 3, 4);
+                    Collections.swap(RegionArray, 0, 5);
+                    Collections.swap(RegionArray, 2, 3);
+                    Collections.swap(RegionArray, 4, 5);
 
                     // if no time is selected, current time will be selected
                     if (timeSelectedInt == 2400) {
