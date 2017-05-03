@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+//        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9738313297767405~2536193979");
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<AirQuality> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), "Network call failed, server issues!", Toast.LENGTH_LONG).show();
-                    Log.e("failure", t.getCause().toString());
+//                    Log.e("failure", t.getCause().toString());
                 }
             });
         } else {
