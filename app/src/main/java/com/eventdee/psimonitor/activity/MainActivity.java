@@ -148,12 +148,14 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putParcelableArrayListExtra("todayPSIArray", PSIArray);
-                intent.putExtra("regionName", RegionArray.get(0).getName());
-                intent.putExtra("locationImage", R.drawable.national);
-                intent.putExtra("timePosition", PSIArray.size() - 1);
-                startActivity(intent);
+                if (!RegionArray.isEmpty() || !PSIArray.isEmpty()) {
+                    Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                    intent.putParcelableArrayListExtra("todayPSIArray", PSIArray);
+                    intent.putExtra("regionName", RegionArray.get(0).getName());
+                    intent.putExtra("locationImage", R.drawable.national);
+                    intent.putExtra("timePosition", PSIArray.size() - 1);
+                    startActivity(intent);
+                }
             }
         });
     }
